@@ -1,11 +1,11 @@
-## 👥
+## 👥 ObraData
 - Emanoel Genez de Souza
 - Guilherme de Andrade Santos
 - Guilherme Ribeiro Guimarães
 - Hugo Leonardo Veloso de Sales
 - Wendler José da Silva
 
-# Plataforma de Análise e Produção de Arte Digital
+# Sinthesia - Plataforma de Análise e Produção de Arte Digital
 
 >
 > “Você já parou para pensar no que torna uma obra de arte *realmente* valiosa?”
