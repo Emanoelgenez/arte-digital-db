@@ -1,20 +1,3 @@
--- Limpa as tabelas existentes (importante para evitar duplicatas em testes repetidos)
-DELETE FROM Obra_Ferramenta;
-DELETE FROM Feedback;
-DELETE FROM Obra;
-DELETE FROM Ferramenta;
-DELETE FROM Categoria;
-DELETE FROM Estilo;
-DELETE FROM Artista;
-
--- Reinicia os contadores de AUTOINCREMENT para que os IDs comecem do 1 novamente.
-DELETE FROM sqlite_sequence WHERE name='Artista';
-DELETE FROM sqlite_sequence WHERE name='Estilo';
-DELETE FROM sqlite_sequence WHERE name='Categoria';
-DELETE FROM sqlite_sequence WHERE name='Obra';
-DELETE FROM sqlite_sequence WHERE name='Ferramenta';
-DELETE FROM sqlite_sequence WHERE name='Feedback';
-
 -- Artistas (40 artistas)
 INSERT INTO Artista (nome, bio, pais_origem) VALUES
 ('Lúcia Andrade', 'Artista visual brasileira com foco em arte generativa.', 'Brasil'),
