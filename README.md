@@ -39,7 +39,6 @@ Criar uma base de dados relacional normalizada para registro e análise de:
 - Ferramentas utilizadas (ex: IA, software, hardware)  
 - Feedback do público (com métricas subjetivas)
 
-Esse sistema pode ser utilizado por plataformas de arte, marketplaces digitais, comunidades criativas ou para fins acadêmicos e analíticos.
 
 ## 🛠️ SGBD Utilizado
 **SQLite**, por sua simplicidade e portabilidade no desenvolvimento inicial.
@@ -64,8 +63,7 @@ Principais entidades e relacionamentos:
 - `Categoria` (1:N com `Obra`)  
 - `Ferramenta` (N:N com `Obra` via `Obra_Ferramenta`)  
 - `Obra` (1:N com `Feedback`)
-
-O modelo foi desenvolvido seguindo boas práticas de normalização (até 3FN), com o uso de chaves estrangeiras, constraints e entidades associativas para resolver relacionamentos complexos.
+  
 
 ### **1. Tabela: Artista**
 
@@ -99,7 +97,7 @@ Essa tabela centraliza as informações sobre as obras de arte.
 - **`id_estilo`** (int):
     - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_estilo` específico na tabela `Estilo`. Indica o estilo artístico da obra.
 - **`id_categoria`** (int):
-    - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_categoria` específico na tabela `Categoria`. Indica a categoria da obra (ex: pintura, escultura, fotografia).
+    - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_categoria` específico na tabela `Categoria`. Indica a categoria da obra (ex: Arte digital, fotojornalismo, modelagem 3d...).
 
 ---
 
@@ -184,7 +182,31 @@ Esta é uma tabela de associação (ou "tabela de junção" / "tabela N:N"). Ela
 - **Obra (N) -- (N) Ferramenta** (resolvido pela tabela `Obra_Ferramenta`): Uma obra pode ser criada usando múltiplas ferramentas, e uma ferramenta pode ser usada em múltiplas obras.
 
 ## 🔎 Exemplos de Consultas SQL
+**SELECT SIMPLES**
+- Listagem de todos os artistas.
+- Listagem de todos os títulos com as datas de criação.
+- Listagem de todos os estilos.
 
+**WHERE**
+- Encontrar obras criadas em 2024.
+- Listagem de artistas do Brasil.
+- Observar quais ferramentas são softwares.
+
+**ORDER BY**
+- Listagem de obras ordenadas por data de criação da mais antiga para a mais recente.
+- Listagem de feedbacks ordenados pela nota de composição da maior para a menor.
+
+**JOIN**
+- Listagem de obras com o nome do artista.
+- Listagem de obras com seus estilos e categorias.
+- Listagem de ferramentas foram usadas em cada obra.
+- Comentários de feedback para cada obra
+
+**GROUP BY, COUNT, AVG**
+- Contagem total de obras que cada artista possui.
+- Média das notas de composição por obra
+
+**OUTRAS EXPLORAÇÕES**
 - Top 3 obras com melhor avaliação de mensagem  
 - Lista de artistas com mais obras produzidas  
 - Estilos mais utilizados  
