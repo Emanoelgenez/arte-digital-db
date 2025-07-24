@@ -67,6 +67,122 @@ Principais entidades e relacionamentos:
 
 O modelo foi desenvolvido seguindo boas práticas de normalização (até 3FN), com o uso de chaves estrangeiras, constraints e entidades associativas para resolver relacionamentos complexos.
 
+### **1. Tabela: Artista**
+
+Esta tabela armazena informações sobre os artistas.
+
+- **`id_artista`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada artista. É do tipo inteiro.
+- **`nome`** (varchar(100)):
+    - Nome completo do artista, limitado a 100 caracteres.
+- **`bio`** (text):
+    - Biografia do artista. O tipo `text` permite um texto longo.
+- **`pais_origem`** (varchar(50)):
+    - País de origem do artista, limitado a 50 caracteres.
+
+---
+
+### **2. Tabela: Obra**
+
+Essa tabela centraliza as informações sobre as obras de arte.
+
+- **`id_obra`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada obra de arte.
+- **`titulo`** (varchar(150)):
+    - Título da obra, limitado a 150 caracteres.
+- **`descricao`** (text):
+    - Descrição detalhada da obra.
+- **`data_criacao`** (date):
+    - Data em que a obra foi criada.
+- **`id_artista`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_artista` específico na tabela `Artista`. Indica qual artista criou a obra.
+- **`id_estilo`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_estilo` específico na tabela `Estilo`. Indica o estilo artístico da obra.
+- **`id_categoria`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona a obra a um `id_categoria` específico na tabela `Categoria`. Indica a categoria da obra (ex: pintura, escultura, fotografia).
+
+---
+
+### **3. Tabela: Feedback**
+
+A tabela registra os feedbacks ou avaliações sobre as obras.
+
+- **`id_feedback`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada feedback.
+- **`id_obra`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona o feedback a uma `id_obra` específica na tabela `Obra`. Indica a qual obra o feedback se refere.
+- **`usuario`** (varchar(100)):
+    - Nome do usuário que deixou o feedback, limitado a 100 caracteres.
+- **`comentario`** (text):
+    - O texto do comentário do feedback.
+- **`nota_composicao`** (int):
+    - Nota para a composição da obra de 1 a 5.
+- **`nota_cor`** (int):
+    - Nota para a cor da obra.
+- **`nota_mensagem`** (int):
+    - Nota para a mensagem ou significado da obra.
+
+---
+
+### **4. Tabela: Estilo**
+
+Armazena informações sobre os diferentes estilos artísticos.
+
+- **`id_estilo`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada estilo.
+- **`nome`** (varchar(100)):
+    - Nome do estilo (ex: Arte Generativa, Fotografia Documental, Pixel Art), limitado a 100 caracteres.
+- **`descricao`** (text):
+    - Descrição do estilo.
+
+---
+
+### **5. Tabela: Categoria**
+
+Armazena as categorias de obras de arte.
+
+- **`id_categoria`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada categoria.
+- **`nome`** (varchar(100)):
+    - Nome da categoria (ex: Arte Digital, Fotojornalismo, Pintura Digital… ), limitado a 100 caracteres.
+- **`descricao`** (text):
+    - Descrição da categoria.
+
+---
+
+### **6. Tabela: Ferramenta**
+
+Armazena informações sobre as ferramentas utilizadas nas obras (ou que podem ser associadas a elas).
+
+- **`id_ferramenta`** (int):
+    - **Chave Primária (PK)**: Identificador único para cada ferramenta.
+- **`nome`** (varchar(100)):
+    - Nome da ferramenta (ex: Adobe Photoshop, Stable Diffusion, Dall-e…), limitado a 100 caracteres.
+- **`tipo`** (varchar(50)):
+    - Tipo da ferramenta (ex: Software, IA, Hardware..  ), limitado a 50 caracteres.
+
+---
+
+### **7. Tabela: Obra_Ferramenta**
+
+Esta é uma tabela de associação (ou "tabela de junção" / "tabela N:N"). Ela resolve o relacionamento Muitos-para-Muitos (N:N) entre `Obra` e `Ferramenta`. Uma obra pode usar várias ferramentas, e uma ferramenta pode ser usada em várias obras.
+
+- **`id_obra`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona a uma `id_obra` na tabela `Obra`. Faz parte da chave primária composta desta tabela.
+- **`id_ferramenta`** (int):
+    - **Chave Estrangeira (FK)**: Relaciona a uma `id_ferramenta` na tabela `Ferramenta`. Faz parte da chave primária composta desta tabela.
+    - **Chave Primária Composta**: Juntas, `(id_obra, id_ferramenta)` formam a chave primária desta tabela. Isso garante que cada par (obra, ferramenta) seja único.
+
+---
+
+### **Relacionamentos:**
+
+- **Artista (1) -- (N) Obra**: Um artista pode criar várias obras, mas cada obra é criada por apenas um artista.
+- **Estilo (1) -- (N) Obra**: Um estilo pode ser associado a várias obras, mas cada obra tem um único estilo.
+- **Categoria (1) -- (N) Obra**: Uma categoria pode conter várias obras, mas cada obra pertence a uma única categoria.
+- **Obra (1) -- (N) Feedback**: Uma obra pode receber vários feedbacks, mas cada feedback está relacionado a uma única obra.
+- **Obra (N) -- (N) Ferramenta** (resolvido pela tabela `Obra_Ferramenta`): Uma obra pode ser criada usando múltiplas ferramentas, e uma ferramenta pode ser usada em múltiplas obras.
+
 ## 🔎 Exemplos de Consultas SQL
 
 - Top 3 obras com melhor avaliação de mensagem  
