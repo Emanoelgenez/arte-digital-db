@@ -55,7 +55,7 @@ Esse sistema pode ser utilizado por plataformas de arte, marketplaces digitais, 
 
 ### 📌 Modelo Conceitual (ER)
 
-![Diagrama ER](../img/diagrama.png)
+![Diagrama ER](https://github.com/Emanoelgenez/arte-digital-db/blob/master/img/diagrama.png)
 
 Principais entidades e relacionamentos:
 
