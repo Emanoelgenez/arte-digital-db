@@ -197,8 +197,15 @@ Esta é uma tabela de associação (ou "tabela de junção" / "tabela N:N"). Ela
 - Listagem de feedbacks ordenados pela nota de composição da maior para a menor.
 
 **JOIN**
-- Listagem de obras com o nome do artista.
-- Listagem de todos os artistas e suas obras (se existirem)
+- Listagem com título da obra e nome do artista.
+- Listagem de obras com seus estilos e categorias.
+- Listagem das ferramentas foram usadas em cada obra
+- Comentários de feedback para cada obra
+
+**DISTINCT**
+- Listagem com nomes de ferramentas únicas usadas em todas as obras.
+- Listagem de quais países estão representados na plataforma sem repetições.
+- Listagem de quais estilos artísticos já receberam algum tipo de feedback.
 
 **GROUP BY, COUNT, AVG**
 - Contagem total de obras que cada artista possui.
