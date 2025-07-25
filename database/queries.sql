@@ -37,65 +37,49 @@ ORDER BY nota_composicao DESC; -- DESC para descendente
 
 
 -- --> 4. QUERIES COM JUNÇÕES (JOIN)
--- Listar  obras com o nome do artista 
+-- Listar título da obra com nome do artista
 SELECT O.titulo, A.nome AS nome_artista
 FROM Obra O
 JOIN Artista A ON O.id_artista = A.id_artista;
 
--- Listar todos os artistas e suas obras
-SELECT
-    A.nome AS nome_artista,
-    O.titulo AS titulo_obra
-FROM
-    Artista A
-LEFT JOIN
-    Obra O ON A.id_artista = O.id_artista
-ORDER BY
-    A.nome, O.titulo;
+-- Listar obras com seus estilos e categorias
+SELECT O.titulo, E.nome AS estilo, C.nome AS categoria
+FROM Obra O
+JOIN Estilo E ON O.id_estilo = E.id_estilo
+JOIN Categoria C ON O.id_categoria = C.id_categoria;
 
--- Listar todas as ferramentas e as obras em que foram usadas 
-SELECT
-    F.nome AS nome_ferramenta,
-    O.titulo AS titulo_obra
-FROM
-    Obra_Ferramenta OF_join
-RIGHT JOIN
-    Ferramenta F ON OF_join.id_ferramenta = F.id_ferramenta
-LEFT JOIN
-    Obra O ON OF_join.id_obra = O.id_obra
-ORDER BY
-    F.nome, O.titulo;
+-- Quais ferramentas foram usadas em cada obra?
+SELECT O.titulo AS nome_obra, F.nome AS nome_ferramenta
+FROM Obra_Ferramenta OF
+JOIN Obra O ON OF.id_obra = O.id_obra
+JOIN Ferramenta F ON OF.id_ferramenta = F.id_ferramenta
+ORDER BY nome_obra, nome_ferramenta;
 
--- FULL JOIN para listar todas as obras e todos os feedbacks
--- (Parte 1: LEFT JOIN - todas as obras e seus feedbacks)
-SELECT
-    O.titulo AS nome_obra,
-    F.usuario,
-    F.comentario
-FROM
-    Obra O
-LEFT JOIN
-    Feedback F ON O.id_obra = F.id_obra
+-- Comentários de feedback para cada obra
+SELECT O.titulo AS nome_obra, F.usuario, F.comentario, F.nota_composicao
+FROM Feedback F
+JOIN Obra O ON F.id_obra = O.id_obra
+ORDER BY nome_obra;
 
-UNION ALL
+-- --> 5. QUERIES COM DISTINCT
+-- Listar nomes de ferramentas únicas usadas em todas as obras:
+SELECT DISTINCT F.nome
+FROM Obra_Ferramenta OF
+JOIN Ferramenta F ON OF.id_ferramenta = F.id_ferramenta;
 
--- (Parte 2: RIGHT JOIN - todos os feedbacks e suas obras,
--- excluindo os já cobertos pelo LEFT JOIN)
-SELECT
-    O.titulo AS nome_obra,
-    F.usuario,
-    F.comentario
-FROM
-    Obra O
-RIGHT JOIN
-    Feedback F ON O.id_obra = F.id_obra
-WHERE
-    O.id_obra IS NULL -- Filtra apenas os feedbacks que NÃO tiveram correspondência na primeira parte
-ORDER BY
-    nome_obra, usuario;
+-- Listar quais países estão representados na plataforma (sem repetições):
+SELECT DISTINCT pais_origem
+FROM Artista
+WHERE pais_origem IS NOT NULL;
+
+-- Listar quais estilos artísticos já receberam algum tipo de feedback:
+SELECT DISTINCT E.nome AS estilo_usado
+FROM Obra O
+JOIN Estilo E ON O.id_estilo = E.id_estilo
+JOIN Feedback F ON O.id_obra = F.id_obra;
 
 
--- --> 5. QUERIES COM AGREGAÇÕES (GROUP BY, COUNT, AVG)
+-- --> 6. QUERIES COM AGREGAÇÕES (GROUP BY, COUNT, AVG)
 -- Contar quantas obras cada artista tem
 SELECT A.nome AS nome_artista, COUNT(O.id_obra) AS total_obras
 FROM Artista A
@@ -112,7 +96,7 @@ ORDER BY media_nota_composicao DESC; --Calcula a média de uma coluna numérica 
 
 
 
--- --> 6. OUTRAS EXPLORAÇÕES
+-- --> 7. OUTRAS EXPLORAÇÕES
 -- Top 3 estilos mais utilizados
 SELECT e.nome, COUNT(*) AS total_obras
 FROM Obra o
