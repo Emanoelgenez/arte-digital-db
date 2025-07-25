@@ -198,9 +198,8 @@ Esta é uma tabela de associação (ou "tabela de junção" / "tabela N:N"). Ela
 
 **JOIN**
 - Listagem de obras com o nome do artista.
-- Listagem de obras com seus estilos e categorias.
-- Listagem de ferramentas foram usadas em cada obra.
-- Comentários de feedback para cada obra
+- Listagem de todos os artistas e suas obras (se existirem)
+- listagem de todas as ferramentas e as obras em que foram usadas (se existirem)
 
 **GROUP BY, COUNT, AVG**
 - Contagem total de obras que cada artista possui.
