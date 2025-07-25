@@ -66,7 +66,7 @@ LEFT JOIN
 ORDER BY
     F.nome, O.titulo;
 
--- Simulação de FULL JOIN para listar todas as obras e todos os feedbacks
+-- FULL JOIN para listar todas as obras e todos os feedbacks
 -- (Parte 1: LEFT JOIN - todas as obras e seus feedbacks)
 SELECT
     O.titulo AS nome_obra,
@@ -79,7 +79,7 @@ LEFT JOIN
 
 UNION ALL
 
--- (Parte 2: RIGHT JOIN simulado - todos os feedbacks e suas obras,
+-- (Parte 2: RIGHT JOIN - todos os feedbacks e suas obras,
 -- excluindo os já cobertos pelo LEFT JOIN)
 SELECT
     O.titulo AS nome_obra,
