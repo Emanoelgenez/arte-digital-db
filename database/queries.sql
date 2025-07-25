@@ -25,7 +25,6 @@ SELECT nome FROM Ferramenta
 WHERE tipo = 'software';
 
 
-
 -- --> 3. QUERIES COM ORDENAÇÃO (ORDER BY)
 -- Listar obras ordenadas por data de criação (da mais antiga para a mais recente):
 SELECT titulo, data_criacao FROM Obra
@@ -43,25 +42,57 @@ SELECT O.titulo, A.nome AS nome_artista
 FROM Obra O
 JOIN Artista A ON O.id_artista = A.id_artista;
 
--- Listar obras com seus estilos e categorias
-SELECT O.titulo, E.nome AS estilo, C.nome AS categoria
-FROM Obra O
-JOIN Estilo E ON O.id_estilo = E.id_estilo
-JOIN Categoria C ON O.id_categoria = C.id_categoria;
+-- Listar todos os artistas e suas obras
+SELECT
+    A.nome AS nome_artista,
+    O.titulo AS titulo_obra
+FROM
+    Artista A
+LEFT JOIN
+    Obra O ON A.id_artista = O.id_artista
+ORDER BY
+    A.nome, O.titulo;
 
--- Quais ferramentas foram usadas em cada obra?
-SELECT O.titulo AS nome_obra, F.nome AS nome_ferramenta
-FROM Obra_Ferramenta OF
-JOIN Obra O ON OF.id_obra = O.id_obra
-JOIN Ferramenta F ON OF.id_ferramenta = F.id_ferramenta
-ORDER BY nome_obra, nome_ferramenta;
+-- Listar todas as ferramentas e as obras em que foram usadas 
+SELECT
+    F.nome AS nome_ferramenta,
+    O.titulo AS titulo_obra
+FROM
+    Obra_Ferramenta OF_join
+RIGHT JOIN
+    Ferramenta F ON OF_join.id_ferramenta = F.id_ferramenta
+LEFT JOIN
+    Obra O ON OF_join.id_obra = O.id_obra
+ORDER BY
+    F.nome, O.titulo;
 
--- Comentários de feedback para cada obra
-SELECT O.titulo AS nome_obra, F.usuario, F.comentario, F.nota_composicao
-FROM Feedback F
-JOIN Obra O ON F.id_obra = O.id_obra
-ORDER BY nome_obra;
+-- Simulação de FULL JOIN para listar todas as obras e todos os feedbacks
+-- (Parte 1: LEFT JOIN - todas as obras e seus feedbacks)
+SELECT
+    O.titulo AS nome_obra,
+    F.usuario,
+    F.comentario
+FROM
+    Obra O
+LEFT JOIN
+    Feedback F ON O.id_obra = F.id_obra
 
+UNION ALL
+
+-- (Parte 2: RIGHT JOIN simulado - todos os feedbacks e suas obras,
+-- excluindo os já cobertos pelo LEFT JOIN)
+SELECT
+    O.titulo AS nome_obra,
+    F.usuario,
+    F.comentario
+FROM
+    Obra O
+RIGHT JOIN
+    Feedback F ON O.id_obra = F.id_obra
+WHERE
+    O.id_obra IS NULL -- Filtra apenas os feedbacks que NÃO tiveram correspondência na primeira parte
+ORDER BY
+    nome_obra, usuario;
 
 
 -- --> 5. QUERIES COM AGREGAÇÕES (GROUP BY, COUNT, AVG)
