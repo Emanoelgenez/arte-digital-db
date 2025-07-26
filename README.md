@@ -250,4 +250,6 @@ A arte digital é uma linguagem da contemporaneidade. Reflete os paradoxos da so
 - Geração de relatórios automatizados com Python/Power BI  
 - Integração com APIs de IA generativa (ex: geração de arte)  
 - Sistema web com upload de obras e coleta de feedbacks  
-- Publicações analíticas sobre a produção artística digital brasileira  
+- Publicações analíticas sobre a produção artística digital brasileira
+
+  ## [Projeto ObraData Hackathon Relâmpago!](https://github.com/Emanoelgenez/arte-digital-db/blob/master/projeto_hackathon/Obra%20Data%20-%20Intelig%C3%AAncia%20criativa%20para%20o%20novo%20tempo%20da%20arte..pdf)
